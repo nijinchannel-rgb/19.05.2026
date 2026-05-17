@@ -558,63 +558,50 @@
                 storiesContainer.scrollBy({ left: 200, behavior: 'smooth' });
             });
 
-            // ========== МУЗЫКА (синтезированная, всегда работает) ==========
+            // ========== ВАША МУЗЫКА (из файла) ==========
             const musicBtn = document.getElementById('musicToggle');
             const musicIcon = musicBtn.querySelector('i');
-            let audioCtx = null;
+            let audioElement = null;
             let isPlaying = false;
-            let musicInterval = null;
-
-            function playMelody() {
-                if (!audioCtx || audioCtx.state === 'closed') return;
-                if (audioCtx.state === 'suspended') audioCtx.resume();
-                const now = audioCtx.currentTime;
-                const notes = [
-                    { freq: 523.25, start: 0, dur: 0.4 }, { freq: 523.25, start: 0.4, dur: 0.4 },
-                    { freq: 587.33, start: 0.8, dur: 0.4 }, { freq: 523.25, start: 1.2, dur: 0.4 },
-                    { freq: 698.46, start: 1.6, dur: 0.4 }, { freq: 659.25, start: 2.0, dur: 0.8 },
-                    { freq: 523.25, start: 2.8, dur: 0.4 }, { freq: 523.25, start: 3.2, dur: 0.4 },
-                    { freq: 587.33, start: 3.6, dur: 0.4 }, { freq: 523.25, start: 4.0, dur: 0.4 },
-                    { freq: 783.99, start: 4.4, dur: 0.4 }, { freq: 698.46, start: 4.8, dur: 0.8 },
-                    { freq: 523.25, start: 5.6, dur: 0.4 }, { freq: 523.25, start: 6.0, dur: 0.4 },
-                    { freq: 1046.5, start: 6.4, dur: 0.4 }, { freq: 880, start: 6.8, dur: 0.4 },
-                    { freq: 698.46, start: 7.2, dur: 0.4 }, { freq: 659.25, start: 7.6, dur: 0.8 }
-                ];
-                notes.forEach(n => {
-                    const osc = audioCtx.createOscillator();
-                    const gain = audioCtx.createGain();
-                    osc.type = 'sine';
-                    osc.frequency.value = n.freq;
-                    gain.gain.setValueAtTime(0.3, now + n.start);
-                    gain.gain.exponentialRampToValueAtTime(0.001, now + n.start + n.dur);
-                    osc.connect(gain);
-                    gain.connect(audioCtx.destination);
-                    osc.start(now + n.start);
-                    osc.stop(now + n.start + n.dur);
-                });
-            }
 
             function startMusic() {
-                if (audioCtx && audioCtx.state !== 'closed') {
-                    audioCtx.close();
+                if (!audioElement) {
+                    audioElement = new Audio('assets/music/song.mp3');
+                    audioElement.loop = true;
+
+                    // Диагностика ошибок
+                    audioElement.addEventListener('error', () => {
+                        const err = audioElement.error;
+                        let msg = '❌ Ошибка загрузки музыки:\n';
+                        switch (err.code) {
+                            case 1: msg += 'Файл не найден (404). Проверьте путь: assets/music/song.mp3'; break;
+                            case 2: msg += 'Сетевая ошибка.'; break;
+                            case 3: msg += 'Файл повреждён или не является MP3. Перекодируйте его.'; break;
+                            case 4: msg += 'Формат не поддерживается браузером.'; break;
+                            default: msg += 'Неизвестная ошибка.';
+                        }
+                        alert(msg);
+                        console.error(msg, err);
+                    });
+
+                    audioElement.addEventListener('canplaythrough', () => {
+                        console.log('✅ Ваша музыка готова к воспроизведению');
+                    });
                 }
-                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                if (audioCtx.state === 'suspended') audioCtx.resume();
-                playMelody();
-                if (musicInterval) clearInterval(musicInterval);
-                musicInterval = setInterval(playMelody, 8500);
+
+                audioElement.play().catch(e => {
+                    console.error('Ошибка воспроизведения:', e);
+                    alert('Не удалось воспроизвести музыку. Возможно, файл повреждён.');
+                });
+
                 isPlaying = true;
                 musicIcon.classList.remove('fa-play');
                 musicIcon.classList.add('fa-pause');
             }
 
             function pauseMusic() {
-                if (audioCtx && audioCtx.state === 'running') {
-                    audioCtx.suspend();
-                }
-                if (musicInterval) {
-                    clearInterval(musicInterval);
-                    musicInterval = null;
+                if (audioElement) {
+                    audioElement.pause();
                 }
                 isPlaying = false;
                 musicIcon.classList.remove('fa-pause');
@@ -622,18 +609,11 @@
             }
 
             function resumeMusic() {
-                if (audioCtx) {
-                    if (audioCtx.state === 'suspended') {
-                        audioCtx.resume().then(() => {
-                            if (musicInterval) clearInterval(musicInterval);
-                            musicInterval = setInterval(playMelody, 8500);
-                            isPlaying = true;
-                            musicIcon.classList.remove('fa-play');
-                            musicIcon.classList.add('fa-pause');
-                        });
-                    } else if (audioCtx.state === 'closed') {
-                        startMusic();
-                    }
+                if (audioElement) {
+                    audioElement.play().catch(e => console.error(e));
+                    isPlaying = true;
+                    musicIcon.classList.remove('fa-play');
+                    musicIcon.classList.add('fa-pause');
                 } else {
                     startMusic();
                 }
