@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>Aniii_ix BDAY! ✨</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Lobster&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --accent: #9c27b0;
+            --accent2: #ab47bc;
+            --text: #2a1b2e;
+            --text-light: #6a4f7a;
+            --border: #e1bee7;
+            --shadow: 0 12px 32px rgba(150, 100, 180, 0.1);
+            --radius: 24px;
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --story-ring: linear-gradient(135deg, #ce93d8, #ab47bc, #9c27b0, #7b1fa2);
+            --story-ring-viewed: #d1c4e9;
+            --font-heading: 'Lobster', cursive;
+            --font-body: 'Montserrat', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: var(--font-body);
+            background: #f5efff;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 20px 10px;
+            margin: 0;
+        }
+        .app-container {
+            width: 100%;
+            max-width: 393px;
+            min-height: calc(100vh - 40px);
+            background: linear-gradient(135deg, #faf5ff, #f3e8ff, #ede0f7, #f5e5ff);
+            background-size: 300% 300%;
+            animation: gradientShift 10s ease infinite;
+            box-shadow: 0 20px 50px rgba(100, 50, 120, 0.2), 0 0 0 1px rgba(206,147,216,0.3);
+            border-radius: 28px;
+            position: relative;
+            overflow-x: hidden;
+        }
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .decor { position: absolute; pointer-events: none; z-index: 0; opacity: 0.12; }
+        .decor-circle {
+            width: 220px; height: 220px; border-radius: 50%; background: #ce93d8;
+            filter: blur(50px); animation: floatDecor 12s ease-in-out infinite alternate;
+        }
+        .decor-circle:nth-child(2) { width: 160px; height: 160px; background: #ab47bc; top: 280px; right: -30px; animation-delay: -4s; }
+        .decor-circle:nth-child(3) { width: 130px; height: 130px; background: #e1bee7; bottom: 180px; left: -30px; animation-delay: -8s; }
+        @keyframes floatDecor {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            100% { transform: translate(25px, -25px) rotate(12deg); }
+        }
+        header {
+            position: sticky; top: 0; z-index: 90;
+            background: rgba(255,255,255,0.75); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border); padding: 12px 20px;
+            display: flex; align-items: center; justify-content: space-between;
+            border-radius: 28px 28px 0 0; box-shadow: 0 4px 20px rgba(156,39,176,0.06);
+        }
+        .header-left { display: flex; align-items: center; gap: 10px; color: #7b1fa2; font-size: 1.8rem; }
+        .header-left i { filter: drop-shadow(0 2px 6px rgba(156,39,176,0.3)); animation: pulse 2s infinite; }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.08); } 100% { transform: scale(1); } }
+        .logo {
+            font-family: var(--font-heading);
+            font-size: 2rem;
+            font-weight: 400;
+            background: linear-gradient(135deg, #7b1fa2, #9c27b0, #ce93d8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            white-space: nowrap;
+            letter-spacing: 1px;
+        }
+        .header-right { display: flex; align-items: center; gap: 14px; }
+        .music-btn, .gift-btn {
+            background: rgba(156,39,176,0.1); border: 1px solid rgba(156,39,176,0.2);
+            border-radius: 50%; width: 38px; height: 38px; display: flex; align-items: center;
+            justify-content: center; cursor: pointer; color: #5c3d6e; font-size: 1.2rem;
+            transition: var(--transition);
+        }
+        .music-btn:hover, .gift-btn:hover { background: rgba(156,39,176,0.2); transform: scale(1.05); }
+        .stories-container {
+            padding: 18px 16px; display: flex; gap: 16px; overflow-x: auto; scroll-behavior: smooth;
+            scrollbar-width: none; -ms-overflow-style: none; align-items: center; position: relative; z-index: 1;
+            -webkit-overflow-scrolling: touch;
+        }
+        .stories-container::-webkit-scrollbar { display: none; }
+        .story { display: flex; flex-direction: column; align-items: center; gap: 6px; cursor: pointer; flex-shrink: 0; transition: var(--transition); }
+        .story:hover .story-ring { transform: scale(1.07); }
+        .story-ring {
+            width: 68px; height: 68px; border-radius: 50%; padding: 2px; transition: var(--transition);
+            box-shadow: 0 8px 20px rgba(156,39,176,0.4);
+            background: var(--story-ring);
+        }
+        .story.viewed .story-ring { background: var(--story-ring-viewed); box-shadow: 0 4px 12px rgba(156,39,176,0.15); }
+        .story.viewed .story-ring img { filter: grayscale(0.3); opacity: 0.8; }
+        .story-ring img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 3px solid white; display: block; }
+        .story-name { font-size: 0.65rem; font-weight: 600; color: var(--text-light); max-width: 70px; text-align: center; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; letter-spacing: 0.3px; }
+        .posts-feed { padding: 0 16px 30px; display: flex; flex-direction: column; gap: 24px; position: relative; z-index: 1; }
+        .post-card {
+            background: white; border-radius: var(--radius); box-shadow: var(--shadow);
+            overflow: hidden; transition: var(--transition); animation: fadeInUp 0.5s ease forwards;
+            opacity: 0; border: 1px solid rgba(206,147,216,0.2);
+        }
+        .post-card.visible { opacity: 1; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(40px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
+        .friend-post .post-header { display: flex; align-items: center; gap: 10px; padding: 14px 16px 0; }
+        .friend-post .avatar { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid var(--accent2); box-shadow: 0 4px 10px rgba(156,39,176,0.2); }
+        .friend-post .username { font-weight: 700; font-size: 0.9rem; color: var(--text); display: flex; align-items: center; gap: 3px; }
+        .verified-badge { color: #9c27b0; font-size: 0.7rem; }
+        .friend-post .time { font-size: 0.7rem; color: var(--text-light); margin-left: auto; }
+        .friend-post .post-content { display: flex; gap: 12px; padding: 12px 16px 16px; align-items: flex-start; }
+        .friend-post .post-icon {
+            width: 40px; height: 40px; border-radius: 50%; background: rgba(156,39,176,0.08);
+            display: flex; align-items: center; justify-content: center; color: #ab47bc; font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+        .friend-post .post-text {
+            flex: 1; font-size: 0.95rem; line-height: 1.6; color: #3d2b45;
+            background: rgba(156,39,176,0.04); border-left: 3px solid #ab47bc;
+            padding: 10px 14px; border-radius: 0 14px 14px 0; font-style: italic;
+        }
+        .text-only-post .post-text-only {
+            padding: 20px; font-size: 1.05rem; line-height: 1.6; color: #2a1b2e;
+            font-style: italic; background: transparent;
+        }
+        .captioned-post .post-image, .photo-only-post .post-image {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        .captioned-post .caption { padding: 12px 16px 8px; font-size: 0.9rem; color: #4a3b4f; }
+        .post-actions {
+            padding: 8px 16px 14px; display: flex; gap: 24px; color: #5c3d6e; font-size: 1.1rem;
+        }
+        .post-actions span { display: flex; align-items: center; gap: 5px; cursor: pointer; transition: transform 0.2s; }
+        .post-actions span:hover { transform: scale(1.04); }
+        .post-actions i.fa-heart { transition: color 0.2s, transform 0.2s; font-size: 1.1rem; }
+        .post-actions i.fa-heart.active { color: #9c27b0; font-weight: 900; animation: heartPop 0.3s ease; }
+        @keyframes heartPop { 0% { transform: scale(1); } 50% { transform: scale(1.4); } 100% { transform: scale(1); } }
+        .modal-overlay {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.55); backdrop-filter: blur(6px);
+            z-index: 1000; display: flex; align-items: center; justify-content: center;
+            opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+        }
+        .modal-overlay.active { opacity: 1; pointer-events: all; }
+        .modal {
+            background: white; border-radius: 28px; max-width: 340px; width: 90%; max-height: 85vh;
+            overflow-y: auto; box-shadow: 0 30px 60px rgba(0,0,0,0.3); position: relative;
+            animation: modalIn 0.4s ease; padding: 28px 22px 22px; text-align: center;
+        }
+        @keyframes modalIn { from { transform: scale(0.9) translateY(40px); opacity: 0; } to { transform: scale(1) translateY(0); opacity: 1; } }
+        .modal-close {
+            position: absolute; top: 12px; right: 14px; background: rgba(245,235,250,0.9);
+            border: none; width: 36px; height: 36px; border-radius: 50%; font-size: 1.1rem;
+            cursor: pointer; display: flex; align-items: center; justify-content: center;
+            transition: var(--transition); color: #5c3d6e; z-index: 10;
+        }
+        .modal-close:hover { background: #f3e5f5; transform: rotate(90deg); }
+        .modal h3 { font-family: var(--font-heading); font-size: 2.2rem; margin-bottom: 12px; color: #2a1b2e; }
+        .modal p { font-size: 0.95rem; color: #4a3b4f; line-height: 1.6; margin-bottom: 20px; }
+        .modal .btn {
+            background: linear-gradient(135deg, #9c27b0, #ab47bc); color: white; border: none;
+            padding: 12px 28px; border-radius: 50px; font-weight: 600; font-size: 0.95rem;
+            cursor: pointer; transition: 0.2s; letter-spacing: 0.5px; font-family: var(--font-body);
+            box-shadow: 0 8px 20px rgba(156,39,176,0.3);
+        }
+        .modal .btn:hover { background: #7b1fa2; transform: scale(1.03); }
+        .story-modal-content { position: relative; }
+        .story-modal-content img { width: 100%; border-radius: 20px; margin-bottom: 16px; aspect-ratio: 3/4; object-fit: cover; box-shadow: 0 12px 28px rgba(156,39,176,0.2); }
+        .story-tap-left, .story-tap-right {
+            position: absolute; top: 0; bottom: 0; width: 40%; cursor: pointer; z-index: 5;
+        }
+        .story-tap-left { left: 0; } .story-tap-right { right: 0; }
+        .story-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255,255,255,0.8);
+            backdrop-filter: blur(4px);
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #5c3d6e;
+            font-size: 1.2rem;
+            z-index: 6;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            pointer-events: none;
+        }
+        .story-arrow-left { left: 8px; }
+        .story-arrow-right { right: 8px; }
+        .confetti-piece {
+            position: fixed; top: -20px; width: 12px; height: 12px; opacity: 0.85; z-index: 9999;
+            pointer-events: none; animation: confettiFall 4s linear forwards;
+        }
+        @keyframes confettiFall { 0% { transform: translateY(0) rotate(0deg); opacity: 1; } 100% { transform: translateY(110vh) rotate(720deg); opacity: 0; } }
+        .heart-burst {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0);
+            font-size: 4rem; color: #ce93d8;
+            pointer-events: none; z-index: 5;
+            text-shadow: 0 0 30px rgba(156, 39, 176, 0.8);
+            animation: burst 0.8s ease forwards;
+        }
+        @keyframes burst { 0% { transform: translate(-50%, -50%) scale(0); opacity: 1; } 50% { transform: translate(-50%, -50%) scale(1.3); opacity: 0.8; } 100% { transform: translate(-50%, -50%) scale(2); opacity: 0; } }
+        .story-scroll-btn {
+            position: absolute; top: 50%; transform: translateY(-50%); z-index: 2;
+            background: rgba(255,255,255,0.8); border: none; border-radius: 50%;
+            width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;
+            cursor: pointer; color: #5c3d6e; font-size: 1rem; box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            opacity: 0; transition: opacity 0.3s;
+        }
+        .stories-container:hover .story-scroll-btn { opacity: 1; }
+        .scroll-left { left: 8px; }
+        .scroll-right { right: 8px; }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <div class="decor decor-circle" style="top: 40px; left: -30px;"></div>
+        <div class="decor decor-circle" style="top: 400px; right: -20px;"></div>
+        <div class="decor decor-circle" style="bottom: 100px; left: -20px;"></div>
+
+        <header>
+            <div class="header-left">
+                <i class="fas fa-birthday-cake"></i>
+                <span class="logo">Aniii_ix BDAY!</span>
+            </div>
+            <div class="header-right">
+                <div class="music-btn" id="musicToggle" title="Музыка">
+                    <i class="fas fa-play"></i>
+                </div>
+                <div class="gift-btn" id="giftButton" title="Сюрприз">
+                    <i class="fas fa-gift"></i>
+                </div>
+            </div>
+        </header>
+
+        <div style="position: relative;">
+            <button class="story-scroll-btn scroll-left" id="scrollLeftBtn"><i class="fas fa-chevron-left"></i></button>
+            <div class="stories-container" id="storiesContainer"></div>
+            <button class="story-scroll-btn scroll-right" id="scrollRightBtn"><i class="fas fa-chevron-right"></i></button>
+        </div>
+
+        <div class="posts-feed" id="postsFeed"></div>
+    </div>
+
+    <!-- Приветственное окно -->
+    <div class="modal-overlay active" id="welcomeModalOverlay">
+        <div class="modal" id="welcomeModal">
+            <h3>Маленький секрет</h3>
+            <p>Нажми на подарок 🎁 <strong>после того, как посмотришь всё остальное</strong><br>А ещё можешь включить музыку в правом верхнем углу (она написана не в специальной программе, а на питоне при помощи 1 и 0) 🎵</p>
+            <button class="btn" id="welcomeBtn">😊 ГААААААЗ 😊</button>
+        </div>
+    </div>
+
+    <!-- Модалка подарка -->
+    <div class="modal-overlay" id="giftModalOverlay">
+        <div class="modal" id="giftModal">
+            <button class="modal-close" id="giftClose"><i class="fas fa-times"></i></button>
+            <h3>Анют, с твоим днем! 🎂</h3>
+            <p>✨ Ты — невероятная, вдохновляющая и самая очаровательная. Пусть твоя жизнь будет наполнена счастливыми моментами, яркими красками и теплотой близких. Оставайся такой же прекрасной, мечтай, сияй и знай, что ты — настоящее чудо. Обожаю тебя бесконечно! ✨</p>
+            <p> Сейчас напиши мне, а я скину тебе ссылку с тайм кодом (как будто, что-то напоминает 🥹) </p>
+            <p> После просмотра загляни в коридор. В шкафу, во второй двери справа, в нижней полке тебя ждет часть подарка 💜</p>
+            <button class="btn" id="giftBtn">Обнимаю 🤗</button>
+        </div>
+    </div>
+
+    <!-- Модалка сторис -->
+    <div class="modal-overlay" id="storyModalOverlay">
+        <div class="modal story-modal-content" id="storyModal">
+            <button class="modal-close" id="storyClose"><i class="fas fa-times"></i></button>
+            <div style="position: relative;">
+                <img id="storyModalImg" src="" alt="story">
+                <div class="story-tap-left" id="storyTapLeft">
+                    <div class="story-arrow story-arrow-left"><i class="fas fa-chevron-left"></i></div>
+                </div>
+                <div class="story-tap-right" id="storyTapRight">
+                    <div class="story-arrow story-arrow-right"><i class="fas fa-chevron-right"></i></div>
+                </div>
+            </div>
+            <p id="storyModalText" style="margin-top: 12px;"></p>
+            <p id="storyModalExtraText" style="margin-top: 8px; font-size: 0.9rem; color: #6a4f7a;"></p>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            // ========== НАСТРОЙКИ: ЗАМЕНИТЕ НА СВОИ ДАННЫЕ ==========
+            const CUSTOM_IMAGES = {
+                story1: 'assets/stories/story1.jpg',
+                story2: 'assets/stories/story2.jpg',
+                story3: 'assets/stories/story3.jpg',
+                story4: 'assets/stories/story4.jpg',
+                story5: 'assets/stories/story5.jpg',
+                story6: 'assets/stories/story6.jpg',
+                story7: 'assets/stories/story7.jpg',
+                ava1: 'assets/avatars/ava1.jpg',
+                ava2: 'assets/avatars/ava2.png',
+                ava3: 'assets/avatars/ava3.png',
+                ava4: 'assets/avatars/ava4.jpg',
+                photo1: 'assets/photos/photo1.jpg',
+                photo2: 'assets/photos/photo2.jpg',
+                photo3: 'assets/photos/photo3.jpg',
+                photo4: 'assets/photos/photo4.gif',   // гифка
+                photo5: 'assets/photos/photo5.jpg',
+                photo6: 'assets/photos/photo6.jpg',
+                photo7: 'assets/photos/photo7.jpg',
+                photo8: 'assets/photos/photo8.png',
+            };
+
+            function createPlaceholder(width, height, label, hue) {
+                const canvas = document.createElement('canvas');
+                canvas.width = width;
+                canvas.height = height;
+                const ctx = canvas.getContext('2d');
+                const grad = ctx.createLinearGradient(0, 0, width, height);
+                grad.addColorStop(0, `hsl(${hue}, 70%, 85%)`);
+                grad.addColorStop(0.6, `hsl(${hue}, 80%, 70%)`);
+                grad.addColorStop(1, `hsl(${hue}, 90%, 50%)`);
+                ctx.fillStyle = grad;
+                ctx.fillRect(0, 0, width, height);
+                ctx.fillStyle = 'white';
+                ctx.font = `${width/10}px Montserrat, sans-serif`;
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.shadowColor = 'rgba(0,0,0,0.3)';
+                ctx.shadowBlur = 8;
+                ctx.fillText(label, width/2, height/2);
+                return canvas.toDataURL('image/jpeg', 0.8);
+            }
+
+            const STORY_HUE = [280, 290, 300, 310, 270, 295, 285];
+            const storiesData = [
+                { name: 'Flawless', img: CUSTOM_IMAGES.story1 || createPlaceholder(300,300,'Flawless', STORY_HUE[0]), text: 'Ты безупречна, как бриллиант чистой воды 💎', viewed: false, extraText: '*Flawless — безупречная*' },
+                { name: 'Gorgeous', img: CUSTOM_IMAGES.story2 || createPlaceholder(300,300,'Gorgeous', STORY_HUE[1]), text: 'Твоя красота поражает до безумия ✨', viewed: false, extraText: '*Gorgeous — великолепная, роскошная*' },
+                { name: 'Stunning', img: CUSTOM_IMAGES.story3 || createPlaceholder(300,300,'Stunning', STORY_HUE[2]), text: 'Сногсшибательна сегодня и всегда 🌟', viewed: false, extraText: '*Stunning — сногсшибательная, потрясающая*' },
+                { name: 'Radiant', img: CUSTOM_IMAGES.story4 || createPlaceholder(300,300,'Radiant', STORY_HUE[3]), text: 'Ты сияешь ярче утреннего солнца ☀️', viewed: false, extraText: '*Radiant — сияющая, лучезарная*' },
+                { name: 'Lovely', img: CUSTOM_IMAGES.story5 || createPlaceholder(300,300,'Lovely', STORY_HUE[4]), text: 'Невероятно милая и очаровательная 🌸', viewed: false, extraText: '*Lovely — прелестная, милая*' },
+                { name: 'Fabulous', img: CUSTOM_IMAGES.story6 || createPlaceholder(300,300,'Fabulous', STORY_HUE[5]), text: 'Самая желанная, ведь ты как звезда, сошедшая с неба 💫', viewed: false, extraText: '*Fabulous — сказочная*' },
+                { name: 'Exquisite', img: CUSTOM_IMAGES.story7 || createPlaceholder(300,300,'Exquisite', STORY_HUE[6]), text: 'Изысканная, как произведение искусства 🎨', viewed: false, extraText: '*Exquisite — изысканная, утонченная*' }
+            ];
+
+            const friendAvatars = [
+                CUSTOM_IMAGES.ava1 || createPlaceholder(100,100,'Albina', 275),
+                CUSTOM_IMAGES.ava2 || createPlaceholder(100,100,'Lina', 285),
+                CUSTOM_IMAGES.ava3 || createPlaceholder(100,100,'Digidoncheg', 295),
+                CUSTOM_IMAGES.ava4 || createPlaceholder(100,100,'illum1neR', 305)
+            ];
+            const photoPool = [
+                CUSTOM_IMAGES.photo1 || createPlaceholder(600,800,'Photo 1', 270),
+                CUSTOM_IMAGES.photo2 || createPlaceholder(600,800,'Photo 2', 275),
+                CUSTOM_IMAGES.photo3 || createPlaceholder(600,800,'Photo 3', 280),
+                CUSTOM_IMAGES.photo4 || createPlaceholder(600,800,'Photo 4', 285),
+                CUSTOM_IMAGES.photo5 || createPlaceholder(600,800,'Photo 5', 290),
+                CUSTOM_IMAGES.photo6 || createPlaceholder(600,800,'Photo 6', 295),
+                CUSTOM_IMAGES.photo7 || createPlaceholder(600,800,'Photo 7', 300),
+                CUSTOM_IMAGES.photo8 || createPlaceholder(600,800,'Photo 8', 305),
+            ];
+
+            const postsData = [
+                { type: 'friend', username: 'albina_dr_bodareva', avatar: friendAvatars[0], text: 'Желаю тебе, чтобы удача ходила за тобой хвостиком, но не мешала танцевать. Пусть жизнь балует тебя, как любимую кошку: вкусняшками, тёплыми местами и безлимитным мурчанием!', time: 'только что' },
+                { type: 'captioned-photo', img: photoPool[0], caption: 'Два мили котика лежат вместе', likes: 210 },
+                { type: 'text-only', text: 'Ты заслуживаешь всего самого прекрасного и лучшего. Никогда не сомневайся в этом 💜' },
+                { type: 'photo-only', img: photoPool[1], likes: 198 },
+                { type: 'friend', username: 'lina_dmtt', avatar: friendAvatars[1], text: 'Алина Ивановна, желаю больше креативных картинок на рабочем столе и много любви! Пусть перекурчики случаются чаще, чем  субботники и пранки от Евгеньевича', time: '5 мин' },
+                { type: 'captioned-photo', img: photoPool[2], caption: 'Хочу с тобой на подобных отдых', likes: 245 },
+                { type: 'photo-only', img: photoPool[3], likes: 312 },
+                { type: 'text-only', text: 'У меня до сих пор четкое ощущение того, что это всё - сказка, так как ты просто волшебная!' },
+                { type: 'friend', username: 'digidoncheg', avatar: friendAvatars[2], text: 'С днем рождения, единственная надежда отдела благоустройства. Желаю тебе дальше цвести, благоухать и быть самой пиздатой!', time: '12 мин' },
+                { type: 'captioned-photo', img: photoPool[4], caption: 'В поисках начальника отдела благоустройства по управлению Центральным районом и новых косяков подручного', likes: 178 },
+                { type: 'photo-only', img: photoPool[5], likes: 421 },
+                { type: 'text-only', text: 'Никогда не переставай радовать окружающих своей красотой и улыбкой ✨' },
+                { type: 'photo-only', img: photoPool[6], likes: 270 },
+                { type: 'friend', username: 'illum1neR', avatar: friendAvatars[3], text: 'Хоть мы знакомы не так много, но я за это время осознал, что ты - самое ценное, что есть у меня сейчас и я проживаю самое лучшее и счастливое время в жизни благодаря тому, что ты рядом! Люблю и ценю тебя безмерно 💋', time: '20 мин' },
+                { type: 'captioned-photo', img: photoPool[7], caption: '110 кабинетик тут? На месте', likes: 330 }
+            ];
+
+            const storiesContainer = document.getElementById('storiesContainer');
+            const postsFeed = document.getElementById('postsFeed');
+            let currentStoryIndex = 0;
+            let storyTimer = null;
+            const STORY_DURATION = 15;
+
+            function renderStories() {
+                storiesContainer.innerHTML = storiesData.map((s, idx) => `
+                    <div class="story ${s.viewed ? 'viewed' : ''}" data-story-index="${idx}">
+                        <div class="story-ring"><img src="${s.img}" alt="${s.name}"></div>
+                        <span class="story-name">${s.name}</span>
+                    </div>
+                `).join('');
+            }
+            renderStories();
+
+            function renderPosts() {
+                postsFeed.innerHTML = postsData.map((post, index) => {
+                    let cardClass = '';
+                    let contentHTML = '';
+                    const likes = post.likes || Math.floor(Math.random()*200 + 50);
+                    const comments = Math.floor(Math.random()*40 + 5);
+                    const actions = `
+                        <div class="post-actions">
+                            <span class="like-btn"><i class="far fa-heart"></i> ${likes}</span>
+                            <span><i class="far fa-comment"></i> ${comments}</span>
+                        </div>`;
+
+                    if (post.type === 'friend') {
+                        cardClass = 'friend-post';
+                        contentHTML = `
+                            <div class="post-header">
+                                <img class="avatar" src="${post.avatar}" alt="${post.username}">
+                                <span class="username">${post.username} <i class="fas fa-check-circle verified-badge"></i></span>
+                                <span class="time">${post.time}</span>
+                            </div>
+                            <div class="post-content">
+                                <div class="post-icon"><i class="fas fa-quote-right"></i></div>
+                                <div class="post-text">${post.text}</div>
+                            </div>`;
+                    } else if (post.type === 'text-only') {
+                        cardClass = 'text-only-post';
+                        contentHTML = `<div class="post-text-only">${post.text}</div>`;
+                    } else if (post.type === 'photo-only') {
+                        cardClass = 'photo-only-post';
+                        contentHTML = `<img class="post-image" src="${post.img}" alt="photo">`;
+                    } else if (post.type === 'captioned-photo') {
+                        cardClass = 'captioned-post';
+                        contentHTML = `
+                            <img class="post-image" src="${post.img}" alt="photo">
+                            <div class="caption">${post.caption}</div>`;
+                    }
+                    return `
+                        <div class="post-card ${cardClass} visible" style="animation-delay: ${index * 0.05}s">
+                            ${contentHTML}
+                            ${actions}
+                        </div>`;
+                }).join('');
+            }
+            renderPosts();
+
+            // Лайки
+            postsFeed.addEventListener('click', function(e) {
+                const likeBtn = e.target.closest('.like-btn');
+                if (!likeBtn) return;
+                e.stopPropagation();
+                const icon = likeBtn.querySelector('i.fa-heart');
+                if (!icon) return;
+                const isActive = icon.classList.contains('active');
+                if (isActive) {
+                    icon.classList.remove('active','fas'); icon.classList.add('far');
+                    const countSpan = likeBtn.childNodes[1] || likeBtn.lastChild;
+                    let count = parseInt(countSpan.textContent.trim());
+                    if (!isNaN(count) && count > 0) countSpan.textContent = ' ' + (count - 1);
+                } else {
+                    icon.classList.add('active','fas'); icon.classList.remove('far');
+                    icon.style.animation = 'none'; icon.offsetHeight;
+                    icon.style.animation = 'heartPop 0.3s ease';
+                    const countSpan = likeBtn.childNodes[1] || likeBtn.lastChild;
+                    let count = parseInt(countSpan.textContent.trim());
+                    if (!isNaN(count)) countSpan.textContent = ' ' + (count + 1);
+                }
+            });
+
+            postsFeed.addEventListener('dblclick', function(e) {
+                const card = e.target.closest('.captioned-post, .photo-only-post');
+                if (!card) return;
+                const likeBtn = card.querySelector('.like-btn');
+                if (!likeBtn) return;
+                const icon = likeBtn.querySelector('i.fa-heart');
+                if (!icon) return;
+                if (!icon.classList.contains('active')) {
+                    icon.classList.add('active','fas'); icon.classList.remove('far');
+                    icon.style.animation = 'none'; icon.offsetHeight;
+                    icon.style.animation = 'heartPop 0.3s ease';
+                    const countSpan = likeBtn.childNodes[1] || likeBtn.lastChild;
+                    let count = parseInt(countSpan.textContent.trim());
+                    if (!isNaN(count)) countSpan.textContent = ' ' + (count + 1);
+                }
+                const burst = document.createElement('div');
+                burst.className = 'heart-burst'; burst.innerHTML = '💜';
+                card.style.position = 'relative'; card.appendChild(burst);
+                setTimeout(() => burst.remove(), 800);
+            });
+
+            // Модалки
+            function closeModal(overlay) { overlay.classList.remove('active'); }
+            function openModal(overlay) { overlay.classList.add('active'); }
+
+            const welcomeOverlay = document.getElementById('welcomeModalOverlay');
+            document.getElementById('welcomeBtn').addEventListener('click', () => closeModal(welcomeOverlay));
+
+            const giftOverlay = document.getElementById('giftModalOverlay');
+            document.getElementById('giftButton').addEventListener('click', () => { openModal(giftOverlay); spawnConfetti(); });
+            document.getElementById('giftClose').addEventListener('click', () => closeModal(giftOverlay));
+            document.getElementById('giftBtn').addEventListener('click', () => closeModal(giftOverlay));
+
+            const storyOverlay = document.getElementById('storyModalOverlay');
+            const storyImg = document.getElementById('storyModalImg');
+            const storyText = document.getElementById('storyModalText');
+            const tapLeft = document.getElementById('storyTapLeft');
+            const tapRight = document.getElementById('storyTapRight');
+            document.getElementById('storyClose').addEventListener('click', () => { closeModal(storyOverlay); clearStoryTimer(); });
+
+            function clearStoryTimer() { if (storyTimer) clearTimeout(storyTimer); storyTimer = null; }
+
+            function showStory(index) {
+                if (index < 0 || index >= storiesData.length) return;
+                currentStoryIndex = index;
+                const story = storiesData[index];
+                storyImg.src = story.img;
+                storyImg.alt = story.name;
+                storyText.textContent = story.text;
+                document.getElementById('storyModalExtraText').textContent = story.extraText || '';
+                if (!story.viewed) { story.viewed = true; renderStories(); }
+                clearStoryTimer();
+                if (index + 1 < storiesData.length) {
+                    storyTimer = setTimeout(() => showStory(index + 1), STORY_DURATION * 1000);
+                }
+            }
+
+            storiesContainer.addEventListener('click', (e) => {
+                const storyEl = e.target.closest('.story');
+                if (!storyEl) return;
+                const index = parseInt(storyEl.getAttribute('data-story-index'));
+                if (isNaN(index)) return;
+                showStory(index);
+                openModal(storyOverlay);
+            });
+            tapLeft.addEventListener('click', () => {
+                if (currentStoryIndex > 0) showStory(currentStoryIndex - 1);
+            });
+            tapRight.addEventListener('click', () => {
+                if (currentStoryIndex < storiesData.length - 1) showStory(currentStoryIndex + 1);
+            });
+
+            [giftOverlay, storyOverlay].forEach(overlay => {
+                overlay.addEventListener('click', function(e) { if (e.target === overlay) closeModal(overlay); });
+            });
+
+            // Прокрутка сторис
+            const scrollLeftBtn = document.getElementById('scrollLeftBtn');
+            const scrollRightBtn = document.getElementById('scrollRightBtn');
+            scrollLeftBtn.addEventListener('click', () => {
+                storiesContainer.scrollBy({ left: -200, behavior: 'smooth' });
+            });
+            scrollRightBtn.addEventListener('click', () => {
+                storiesContainer.scrollBy({ left: 200, behavior: 'smooth' });
+            });
+
+            // ========== МУЗЫКА (синтезированная, всегда работает) ==========
+            const musicBtn = document.getElementById('musicToggle');
+            const musicIcon = musicBtn.querySelector('i');
+            let audioCtx = null;
+            let isPlaying = false;
+            let musicInterval = null;
+
+            function playMelody() {
+                if (!audioCtx || audioCtx.state === 'closed') return;
+                if (audioCtx.state === 'suspended') audioCtx.resume();
+                const now = audioCtx.currentTime;
+                const notes = [
+                    { freq: 523.25, start: 0, dur: 0.4 }, { freq: 523.25, start: 0.4, dur: 0.4 },
+                    { freq: 587.33, start: 0.8, dur: 0.4 }, { freq: 523.25, start: 1.2, dur: 0.4 },
+                    { freq: 698.46, start: 1.6, dur: 0.4 }, { freq: 659.25, start: 2.0, dur: 0.8 },
+                    { freq: 523.25, start: 2.8, dur: 0.4 }, { freq: 523.25, start: 3.2, dur: 0.4 },
+                    { freq: 587.33, start: 3.6, dur: 0.4 }, { freq: 523.25, start: 4.0, dur: 0.4 },
+                    { freq: 783.99, start: 4.4, dur: 0.4 }, { freq: 698.46, start: 4.8, dur: 0.8 },
+                    { freq: 523.25, start: 5.6, dur: 0.4 }, { freq: 523.25, start: 6.0, dur: 0.4 },
+                    { freq: 1046.5, start: 6.4, dur: 0.4 }, { freq: 880, start: 6.8, dur: 0.4 },
+                    { freq: 698.46, start: 7.2, dur: 0.4 }, { freq: 659.25, start: 7.6, dur: 0.8 }
+                ];
+                notes.forEach(n => {
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+                    osc.type = 'sine';
+                    osc.frequency.value = n.freq;
+                    gain.gain.setValueAtTime(0.3, now + n.start);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + n.start + n.dur);
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+                    osc.start(now + n.start);
+                    osc.stop(now + n.start + n.dur);
+                });
+            }
+
+            function startMusic() {
+                if (audioCtx && audioCtx.state !== 'closed') {
+                    audioCtx.close();
+                }
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                if (audioCtx.state === 'suspended') audioCtx.resume();
+                playMelody();
+                if (musicInterval) clearInterval(musicInterval);
+                musicInterval = setInterval(playMelody, 8500);
+                isPlaying = true;
+                musicIcon.classList.remove('fa-play');
+                musicIcon.classList.add('fa-pause');
+            }
+
+            function pauseMusic() {
+                if (audioCtx && audioCtx.state === 'running') {
+                    audioCtx.suspend();
+                }
+                if (musicInterval) {
+                    clearInterval(musicInterval);
+                    musicInterval = null;
+                }
+                isPlaying = false;
+                musicIcon.classList.remove('fa-pause');
+                musicIcon.classList.add('fa-play');
+            }
+
+            function resumeMusic() {
+                if (audioCtx) {
+                    if (audioCtx.state === 'suspended') {
+                        audioCtx.resume().then(() => {
+                            if (musicInterval) clearInterval(musicInterval);
+                            musicInterval = setInterval(playMelody, 8500);
+                            isPlaying = true;
+                            musicIcon.classList.remove('fa-play');
+                            musicIcon.classList.add('fa-pause');
+                        });
+                    } else if (audioCtx.state === 'closed') {
+                        startMusic();
+                    }
+                } else {
+                    startMusic();
+                }
+            }
+
+            musicBtn.addEventListener('click', () => {
+                if (isPlaying) {
+                    pauseMusic();
+                } else {
+                    resumeMusic();
+                }
+            });
+
+            function spawnConfetti() {
+                const colors = ['#ce93d8','#e1bee7','#ab47bc','#f3e5f5','#ba68c8','#d1c4e9','#ede7f6','#b39ddb'];
+                for (let i=0; i<80; i++) {
+                    const piece = document.createElement('div'); piece.className = 'confetti-piece';
+                    piece.style.left = Math.random()*100 + '%';
+                    piece.style.backgroundColor = colors[Math.floor(Math.random()*colors.length)];
+                    piece.style.width = Math.random()*12+6+'px'; piece.style.height = Math.random()*12+6+'px';
+                    piece.style.animationDuration = Math.random()*3+2.5+'s';
+                    piece.style.animationDelay = Math.random()*0.8+'s';
+                    document.body.appendChild(piece);
+                    setTimeout(() => piece.remove(), 5000);
+                }
+            }
+        })();
+    </script>
+</body>
+</html>
