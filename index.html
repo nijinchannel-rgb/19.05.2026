@@ -319,6 +319,7 @@
                 photo6: 'assets/photos/photo6.jpg',
                 photo7: 'assets/photos/photo7.JPG',
                 photo8: 'assets/photos/photo8.png',
+                photo9: 'assets/photos/photo9.JPG',
             };
 
             function createPlaceholder(width, height, label, hue) {
@@ -368,6 +369,7 @@
                 CUSTOM_IMAGES.photo6 || createPlaceholder(600,800,'Photo 6', 295),
                 CUSTOM_IMAGES.photo7 || createPlaceholder(600,800,'Photo 7', 300),
                 CUSTOM_IMAGES.photo8 || createPlaceholder(600,800,'Photo 8', 305),
+                CUSTOM_IMAGES.photo9 || createPlaceholder(600,800,'Photo 9', 310),
             ];
 
             const postsData = [
@@ -375,6 +377,7 @@
                 { type: 'captioned-photo', img: photoPool[0], caption: 'Два мили котика лежат вместе', likes: 210 },
                 { type: 'text-only', text: 'Ты заслуживаешь всего самого прекрасного и лучшего. Никогда не сомневайся в этом 💜' },
                 { type: 'photo-only', img: photoPool[1], likes: 198 },
+                { type: 'captioned-photo', img: photoPool[8], caption: 'Самая счастливая на пиздатой фотке', likes: 726 },
                 { type: 'friend', username: 'lina_dmtt', avatar: friendAvatars[1], text: 'Алина Ивановна, желаю больше креативных картинок на рабочем столе и много любви! Пусть перекурчики случаются чаще, чем  субботники и пранки от Евгеньевича', time: '5 мин' },
                 { type: 'captioned-photo', img: photoPool[2], caption: 'Хочу с тобой на подобный отдых', likes: 245 },
                 { type: 'photo-only', img: photoPool[3], likes: 312 },
